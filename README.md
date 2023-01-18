@@ -6,6 +6,10 @@ SDL2 bindings in Rust.
 
 [Implementation directory](./game/)
 
+## Current Screenshot
+
+![Screenshot](./game.png)
+
 
 ## How to setup Emacs
 
