@@ -16,23 +16,13 @@ const HEART_PATH: &str = "./media/images/icons/heart.png";
 
 fn render_hearts(canvas: &mut Canvas<sdl2::video::Window>, texture_creator: &TextureCreator<sdl2::video::WindowContext>) -> Result<(), String> {
     let mut heart_texture = texture_creator.load_texture(HEART_PATH)?;
-    heart_texture.set_alpha_mod(200);
-    println!("{:?}", heart_texture.blend_mode());
-    let point = Point::new(50, 30);
-    let rect = Rect::new(point.x - 15, point.y - 15, 30, 30);
-    canvas.copy_ex(&heart_texture, None, rect, 0.0, point, false, false)?;
-    let point = Point::new(80, 30);
-    let rect = Rect::new(point.x - 15, point.y - 15, 30, 30);
-    canvas.copy_ex(&heart_texture, None, rect, 0.0, point, false, false)?;
-    let point = Point::new(110, 30);
-    let rect = Rect::new(point.x - 15, point.y - 15, 30, 30);
-    canvas.copy_ex(&heart_texture, None, rect, 0.0, point, false, false)?;
-    let point = Point::new(140, 30);
-    let rect = Rect::new(point.x - 15, point.y - 15, 30, 30);
-    canvas.copy_ex(&heart_texture, None, rect, 0.0, point, false, false)?;
-    let point = Point::new(170, 30);
-    let rect = Rect::new(point.x - 15, point.y - 15, 30, 30);
-    canvas.copy_ex(&heart_texture, None, rect, 0.0, point, false, false)?;
+    heart_texture.set_alpha_mod(110);
+    let heart_positions = [50, 80, 110, 140, 170];
+    for heart_position in heart_positions {
+        let point = Point::new(heart_position, 30);
+        let rect = Rect::new(point.x - 15, point.y - 15, 30, 30);
+        canvas.copy_ex(&heart_texture, None, rect, 0.0, point, false, false)?;
+    }
     Ok(())
 }
 
