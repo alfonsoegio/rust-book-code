@@ -1,14 +1,20 @@
 extern crate sdl2;
 
+// use sdl2::image::LoadTexture;
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
 use sdl2::pixels::Color;
+// use sdl2::rect::Point;
 use std::time::Duration;
 
 mod stage;
+mod dummy;
+
+use dummy::Dummy;
 
 const SWIDTH: u32 = 640;
 const SHEIGHT: u32 = 480;
+const _HERO_PATH: &str = "./media/images/dummies/link1.png";
 
 fn main() -> Result<(), String> {
     let sdl_context = sdl2::init().unwrap();
@@ -24,12 +30,13 @@ fn main() -> Result<(), String> {
     canvas.clear();
 
     let texture_creator = canvas.texture_creator();
-    let canvas = stage::render_background(&mut canvas, &texture_creator)?;
-    let canvas = stage::render_hearts(canvas, &texture_creator)?;
-    let canvas = stage::render_score(canvas, &texture_creator, 0)?;
+    let canvas = stage::render_stage(&mut canvas, &texture_creator, 0)?;
     canvas.present();
-    ::std::thread::sleep(Duration::new(0, 2_000_000_000u32));
-    let canvas = stage::render_score(canvas, &texture_creator, 666)?;
+
+    // ::std::thread::sleep(Duration::new(0, 2_000_000_000u32));
+    // let canvas = stage::render_stage(canvas, &texture_creator, 666)?;
+
+    let hero: &mut Dummy = &mut dummy::Dummy::default();
 
     let mut event_pump = sdl_context.event_pump().unwrap();
     'running: loop {
@@ -44,6 +51,10 @@ fn main() -> Result<(), String> {
                     keycode: Some(Keycode::Q),
                     ..
                 } => break 'running,
+                Event::KeyDown {
+                    keycode: Some(Keycode::Up),
+                    ..
+                } => (hero.movement)(hero, event),
                 _ => {}
             }
         }

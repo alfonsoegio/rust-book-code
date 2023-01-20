@@ -16,6 +16,7 @@ const FONT_PATH: &str = "./media/font/FreeSerifBold.ttf";
 pub fn render_background<'a>(canvas: &'a mut Canvas<sdl2::video::Window>,
                              texture_creator: &'a TextureCreator<sdl2::video::WindowContext>)
                              -> Result<&'a mut Canvas<sdl2::video::Window>, String> {
+    canvas.clear();
     let background_texture = texture_creator.load_texture(BACKGROUND_PATH)?;
     canvas.copy(&background_texture, None, None)?;
     Ok(canvas)
@@ -37,10 +38,7 @@ pub fn render_hearts<'a>(canvas: &'a mut Canvas<sdl2::video::Window>,
 
 pub fn render_score<'a>(canvas: &'a mut Canvas<sdl2::video::Window>,
                         texture_creator: &'a TextureCreator<sdl2::video::WindowContext>,
-                        score: i32)
-                        -> Result<&'a mut Canvas<sdl2::video::Window>, String> {
-    let canvas: &mut Canvas<sdl2::video::Window> = render_background(canvas, texture_creator)?;
-    let canvas: &mut Canvas<sdl2::video::Window>  = render_hearts(canvas, texture_creator)?;
+                        score: i32) -> Result<&'a mut Canvas<sdl2::video::Window>, String> {
     let ttf_context = sdl2::ttf::init().map_err(|e| e.to_string())?;
     let mut font = ttf_context.load_font(FONT_PATH, 24)?;
     font.set_style(sdl2::ttf::FontStyle::BOLD);
@@ -50,5 +48,14 @@ pub fn render_score<'a>(canvas: &'a mut Canvas<sdl2::video::Window>,
     let point = Point::new(450, 0);
     let rect = Rect::new(point.x, point.y, 14 * (score_label.len() as u32), 60);
     canvas.copy(&texture, None, Some(rect))?;
+    Ok(canvas)
+}
+
+pub fn render_stage<'a>(canvas: &'a mut Canvas<sdl2::video::Window>,
+                        texture_creator: &'a TextureCreator<sdl2::video::WindowContext>,
+                        score: i32) -> Result<&'a mut Canvas<sdl2::video::Window>, String> {
+    let canvas: &mut Canvas<sdl2::video::Window> = render_background(canvas, texture_creator)?;
+    let canvas: &mut Canvas<sdl2::video::Window>  = render_hearts(canvas, texture_creator)?;
+    let canvas: &mut Canvas<sdl2::video::Window>  = render_score(canvas, texture_creator, score)?;
     Ok(canvas)
 }
