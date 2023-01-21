@@ -8,7 +8,7 @@ SDL2 bindings in Rust.
 
 ## Current Screenshot
 
-![Screenshot](./game.png)
+![Screenshot](./game/media/images/animations/game-1.gif)
 
 
 ## How to setup Emacs

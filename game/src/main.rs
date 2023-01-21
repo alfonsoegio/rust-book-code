@@ -18,7 +18,7 @@ pub const FONT_PATH: &str = "./media/font/FreeSerifBold.ttf";
 
 const HEART_PATH: &str = "./media/images/icons/heart.png";
 const BACKGROUND_PATH: &str = "./media/images/backgrounds/background.png";
-const MAIN_SPEED: u32 = 500;
+const MAIN_SPEED: u32 = 200;
 
 const HERO_PATH: &str = "./media/images/dummies/link1.png";
 
@@ -79,8 +79,13 @@ fn main() -> Result<(), String> {
             &texture_creator,
             &background_texture,
             &heart_texture, 0)?;
-        let src = Rect::new(0, 0, hero.size.x as u32, hero.size.y as u32);
-        let dst = Rect::from_center(hero.position, 3 * (hero.size.x as u32), 3*(hero.size.y as u32));
+        let src_ox = hero.ori * hero.size.x;
+        let src_oy = (hero.animation % hero.n_animation) * hero.size.y;
+        let src = Rect::new(src_ox, src_oy, hero.size.x as u32, hero.size.y as u32);
+        let dst = Rect::from_center(
+            hero.position,
+            (hero.scale.x as u32) * (hero.size.x as u32),
+            (hero.scale.y as u32) * (hero.size.y as u32));
         canvas.copy_ex(&hero_texture, src, dst, 0.0, None, false, false)?;
         (hero.movement)(hero);
         canvas.present();

@@ -27,8 +27,8 @@ pub struct Dummy {
 }
 
 pub fn change_position(o: &mut Dummy) {
-    o.position.x += o.speed.x;
-    o.position.y += o.speed.y;
+    o.position.x += o.scale.x * o.speed.x;
+    o.position.y += o.scale.y * o.speed.y;
 }
 
 pub fn arrow_management(o: &mut Dummy, event: sdl2::event::Event) {
@@ -70,17 +70,17 @@ pub fn arrow_movement(o: &mut Dummy) {
     if o.speed.x != 0 || o.speed.y != 0 {
         o.animation += 1;
     }
-    if o.position.x < 0 {
-        o.position.x += 1;
+    if o.position.x - o.scale.x * o.size.x / 2 <= 0 {
+        o.position.x += o.scale.x + 1;
     }
-    if o.position.x + o.size.x > SCREEN_WIDTH as i32 {
-        o.position.x -= 1;
+    if o.position.x + o.scale.x * o.size.x / 2 >= SCREEN_WIDTH as i32 {
+        o.position.x -= o.scale.x + 1;
     }
-    if o.position.y < 0 {
-        o.position.y = 0;
+    if o.position.y - o.scale.y * o.size.y / 2 <= 0 {
+        o.position.y += o.scale.y + 1;
     }
-    if o.position.y + o.size.y > SCREEN_HEIGHT as i32 {
-        o.position.y -= 1;
+    if o.position.y + o.scale.y * o.size.y / 2 >= SCREEN_HEIGHT as i32 {
+        o.position.y -= o.scale.y + 1;
     }
 }
 
@@ -94,7 +94,7 @@ impl Default for Dummy {
             n_ori: 4,
             ori: 0,
             animation: 0,
-            n_animation: 0,
+            n_animation: 8,
             collided: false,
             state: 0,
             transition: -1,
