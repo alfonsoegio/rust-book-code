@@ -6,16 +6,16 @@ SDL2 bindings in Rust.
 
 [Implementation directory](./game/)
 
-## Current Screenshot
+## Current Screenshots
 
 https://github.com/alfonsoegio/rust-book-code/tree/main/game/media/videos/game-demo.mp4
-
-![Screenshot](./game/media/images/animations/game-1.gif)
 
 
 https://user-images.githubusercontent.com/5286755/213865071-e1e6d329-d90d-4e6b-895a-90c53f172bdc.mp4
 
 
+
+![Screenshot](./game/media/images/animations/game-1.gif)
 
 
 
