@@ -27,8 +27,8 @@ pub struct Dummy {
 }
 
 pub fn change_position(o: &mut Dummy) {
-    o.position.x += o.speed.x * 5;
-    o.position.y += o.speed.y * 5;
+    o.position.x += o.speed.x;
+    o.position.y += o.speed.y;
 }
 
 pub fn arrow_management(o: &mut Dummy, event: sdl2::event::Event) {
@@ -49,19 +49,24 @@ pub fn arrow_management(o: &mut Dummy, event: sdl2::event::Event) {
             o.ori = ORI_E;
             o.speed.x = 1;
         },
-        Event::KeyUp { keycode: Some(Keycode::Up), repeat: false, .. } |
-        Event::KeyUp { keycode: Some(Keycode::Down), repeat: false, .. } |
-        Event::KeyUp { keycode: Some(Keycode::Left), repeat: false, .. } |
-        Event::KeyUp { keycode: Some(Keycode::Right), repeat: false, .. } => {
-            o.animation = 0;
-            o.speed.x = 0;
+        Event::KeyUp { keycode: Some(Keycode::Up), repeat: false, .. } => {
             o.speed.y = 0;
+        },
+        Event::KeyUp { keycode: Some(Keycode::Down), repeat: false, .. } => {
+            o.speed.y = 0;
+        },
+        Event::KeyUp { keycode: Some(Keycode::Left), repeat: false, .. } => {
+            o.speed.x = 0;
+        }
+        Event::KeyUp { keycode: Some(Keycode::Right), repeat: false, .. } => {
+            o.speed.x = 0;
         },
         _ => {}
     }
 }
 
 pub fn arrow_movement(o: &mut Dummy) {
+    change_position(o);
     if o.speed.x != 0 || o.speed.y != 0 {
         o.animation += 1;
     }
@@ -77,7 +82,6 @@ pub fn arrow_movement(o: &mut Dummy) {
     if o.position.y + o.size.y > SCREEN_HEIGHT as i32 {
         o.position.y -= 1;
     }
-    change_position(o);
 }
 
 impl Default for Dummy {
