@@ -8,7 +8,11 @@ SDL2 bindings in Rust.
 
 ## Current Screenshot
 
+https://github.com/alfonsoegio/rust-book-code/game/media/videos/game-demo.mp4
+
 ![Screenshot](./game/media/images/animations/game-1.gif)
+
+
 
 
 ## How to setup Emacs
