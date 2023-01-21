@@ -16,7 +16,6 @@ const FONT_PATH: &str = "./media/font/FreeSerifBold.ttf";
 pub fn render_background<'a>(canvas: &'a mut Canvas<sdl2::video::Window>,
                              texture_creator: &'a TextureCreator<sdl2::video::WindowContext>)
                              -> Result<&'a mut Canvas<sdl2::video::Window>, String> {
-    canvas.clear();
     let background_texture = texture_creator.load_texture(BACKGROUND_PATH)?;
     canvas.copy(&background_texture, None, None)?;
     Ok(canvas)
@@ -54,6 +53,7 @@ pub fn render_score<'a>(canvas: &'a mut Canvas<sdl2::video::Window>,
 pub fn render_stage<'a>(canvas: &'a mut Canvas<sdl2::video::Window>,
                         texture_creator: &'a TextureCreator<sdl2::video::WindowContext>,
                         score: i32) -> Result<&'a mut Canvas<sdl2::video::Window>, String> {
+    canvas.clear();
     let canvas: &mut Canvas<sdl2::video::Window> = render_background(canvas, texture_creator)?;
     let canvas: &mut Canvas<sdl2::video::Window>  = render_hearts(canvas, texture_creator)?;
     let canvas: &mut Canvas<sdl2::video::Window>  = render_score(canvas, texture_creator, score)?;
